@@ -4,7 +4,17 @@
 
 //neat test case: 89 takes 24 steps
 
+/*
+for 196
+
+operation # 40320
+for this operation, sum is 										 and the size of the sum is 40322 digits.
+
+*/
+
+
 #include <iostream>
+#include <vector>
 
 //str1.compare(str2) == 0, they are equivalent
 //str.size returns size
@@ -18,7 +28,7 @@ std::string flip_string( std::string original ){ //create the forward string fro
   std::string flipped = ""; //the string that is the flipped string after the for lop
 
   for ( std::string::reverse_iterator itb = original.rbegin(); itb != original.rend(); ++itb ) { //create the forward integer string from the reversed integer string
-    flipped += *itb; //concat the character
+    flipped.push_back (*itb); //concat the character
 }
   return flipped; //return the flipped string
 }
@@ -33,41 +43,45 @@ bool isPalindrome( std::string original ){
 }
 
 //reverse a string and add it
-bool reverse_and_add ( std::string forward, size_t counter ){
+bool reverse_and_add ( std::string forward, std::size_t counter ){
   std::string reverse = flip_string(forward); //get forward integer string
   std::string result = ""; //final string, addition of integer with reversed integer
  std::string::reverse_iterator itb = reverse.rbegin(); //iterator through the reverse/backward string
  
- int cout = '0'; //the sum from an addition, if the sum is >= 10, cout = 1
+ unsigned int cout = 0; //the sum from an addition, if the sum is >= 10, cout = 1
   for (std::string::reverse_iterator itf = forward.rbegin(); itf != forward.rend(); ++itf) { //iterate through the forward string and add the integers, starting at the final digit
 
     //process needs to happen recursively (and be implemented in the above method as well) starting at the last digit, if the sum of those digits is >= 10, it needs to carry over to the next sum
     //flip string for the final result
 
-    unsigned int sum = ( *itf - '0' ) + ( *itb - '0' ); //convert each of the individual integer digits to integers and sum the digits
+    std::size_t sum = ( *itf ) + ( *itb ); //convert each of the individual integer digits to integers and sum the digits
     if( cout == 1 ){ //cout from previous addition
       sum += 1; //add cout
       cout = 0; //set cout to 0 for the next call
     }
-    if( sum > 9 ){ //if the sum is >= 10
+    if( sum > 9 ){ //if the sum is >= 10 and no cout
       cout = 1; //add one to account for the tens place, converting to a char, this will be added at the addition of the next digit
-    result += ( sum % 10 ) + '0'; //add the digit in the ones place, it is in the range 0 to 9 inclusive, converting to a char
+    result.push_back( sum % 10 ); //add the digit in the ones place, it is in the range 0 to 9 inclusive, not converting to a char
     }
     else{ //if 0 <= sum <= 9, just add the digit normally 
-      result += sum + '0'; //converting to a character
+      result.push_back( sum ); //converting to a character, not converting to character
     }
     ++itb; //increase the reverse string iterator as well, note the forward and reverse are the same length
 }
   if( cout == 1 ){ //if there is a final cout after all additions were performed as above
-    result += '1'; //add a 1 to indicate the carry out from the final addition
+    result.push_back( 1 ); //add a 1 to indicate the carry out from the final addition
   }
   //after this operation is completed, the result will be in the reverse order since addition started at the last digit and was stored starting at that digit. Flip the result.
   std::string final = flip_string(result);
 
-  std::cout << "operation # " << counter << std::endl;
+      for( std::string::iterator it = final.begin(); it != final.end(); ++it ){ //cycle through the string and store the integer versions inside the new string, when reading in as a string, it stores every digit as a character, which uses up unneeded memory. For small numbers, probably more efficient than converting integers to strings.
+	std::cout << (*it ) << std::endl;
+      }
+
+  std::cout << "iteration # " << counter << std::endl;
   //std::cout << "for this operation, reverse string is " << reverse << std::endl;
   // std::cout << "for this operation, forward string is " << forward << std::endl;
-  std::cout << "for this operation, sum is " << final << " and the size of the sum is " << final.size() << " digits." << std::endl;
+  std::cout << "for this iteration, the size of the sum is " << final.size() << " digits." << std::endl;
   std::cout << "" << std::endl; //newline 
 
   if ( !isPalindrome( final ) ){ //not a palindrome, perform the operation again on the integer string
@@ -80,23 +94,22 @@ bool reverse_and_add ( std::string forward, size_t counter ){
   }
 
 }
-
-/*if wanted to input an integer instead of a string, could use this method to convert from an int to a string, but inputting strings is better at the start - saves work
+/*
+if wanted to input an integer instead of a string, could use this method to convert from an int to a string, but inputting strings is better at the start - saves work
 bool start(int check) { //n >= 10
  std::string reverse = ""; //reversed integer string
   std::string result = ""; //final string, addition of integer with reversed integer
   for (int n = check; n != 0; n /= 10 ){ //while n is not equal to 0, divide it by ten and perform the mod operation, compiling a string in the reverse order
-    reverse += ( n % 10 ) + '0'; //add the last element, getting closer to the first, to the string. n % 10 returns the last integer in the sequence, while dividing by 10 each time gets rid of the last digit
+    reverse += ( n % 10 ); //add the last element, getting closer to the first, to the string. n % 10 returns the last integer in the sequence, while dividing by 10 each time gets rid of the last digit
   }
   return reverse_and_add ( reverse, 1 ); //let the reverse_and_add method do the work, passing in the reverse string and the counter that tracks the number of steps to reach a palindrome
 }
-
 */
-
 //main selection for program. PRECONDITION - NO NEGATIVE NUMBERS! otherwise, "anything" can happen
 int main(){
   bool selection = true;
   std::string input;
+  std::string first; //first attempt
 
   while ( selection != false ) {
     std::cout << "Enter an integer >= 10 to test the palindrome conjecture. Enter q to quit. ";
@@ -107,12 +120,16 @@ int main(){
       selection = false;
     }
     else{ //quit not selected
+      for( std::string::iterator it = input.begin(); it != input.end(); ++it ){ //cycle through the string and store the integer versions inside the new string, when reading in as a string, it stores every digit as a character, which uses up unneeded memory. For small numbers, probably more efficient than converting integers to strings.
+	first.push_back( *it - '0' ); //convert old array characters to integers and store in the new string
+	std::cout << (*it - '0' ) << std::endl;
+      }
       if(input[0] == '-' ){ //if the user entered a negative number, the minus sign should be ignored, make a new string without the minus sign (there's probably a way to optimize when making the reverse string)
-	std::string check = input.substr(1); //make a substring ignoring the minus sign and run the program with that
+	std::string check = first.substr(1); //make a substring ignoring the minus sign and run the program with that
     reverse_and_add(check, 1); //test the conjecture on an integer
     }
       else{ //nonnegative, normal case
-	reverse_and_add(input, 1); //test conjecture on an integer
+	reverse_and_add(first, 1); //test conjecture on an integer
       }
   }
   }
