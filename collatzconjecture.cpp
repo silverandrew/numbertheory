@@ -13,25 +13,25 @@ Collatz Conjecture - Start with a number n > 1. Find the number of steps it take
 
 //idea - what if using multiple strings, once a number gets to a certain length, make another string for it? could also work on the palindromeconjecture.cpp
 
-int divide(int n, int counter){
+unsigned int divide(unsigned const int n,unsigned const int counter){
 
   if(n &0x1){ //if odd
     if(n == 1){
       return counter;
     }
-         return divide (3*n + 1, ++counter); //recall function
+         return divide (3*n + 1, counter+ 1); //recall function
   }
 
   else{ //if even
-    return divide (n/2, ++counter);
+    return divide (n/2, counter + 1);
   }
 
 }
 
 int main(){
-  int n = 0;
+  unsigned int n = 0;
   std::cin >> n;
-  int counter = 0;
+  unsigned const int counter = 0;
   std::cout << divide(n, counter) << std::endl;
 
 
