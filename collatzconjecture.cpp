@@ -34,8 +34,10 @@ int main(){
   while(n != 0){
   std::cout << "Enter a number greater than 0 to determine the number of steps to reach 1. Enter 0 to quit." << std::endl;
   std::cin >> n;
+  if(n > 0){
   unsigned const int counter = 0;
   std::cout << divide(n, counter) << std::endl;
+  }
 }
 
   return 0;
