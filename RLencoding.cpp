@@ -44,7 +44,7 @@ char* matchingstring(char* p3){
   char* output = new char[length](); //creates memory for pointer to the first element of a new array and default initializes the values to 0.
   char* array = output; //gets the value of the array, i.e., the address of the first element
   while (*p3){ //while not at the end of the array, i.e. the delimiter
-    if ((*(p3 + 1) == *p3)){ //if the next element in the array is equal to the current
+    if (*(p3 + 1) == *p3){ //if the next element in the array is equal to the current
       while (*(p3 + 1) == *repeat && counter != 11){ //runs until the next element in the array is different than the current element and the numbers for counter are between 1 and 10
         ++counter; //increase the counter to determine the number of repeats
         ++p3; //moves p3 forward in the array to keep checking for more repeats
