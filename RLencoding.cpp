@@ -91,17 +91,15 @@ int main(){
 
   int const buffer_size = 256; //create a buffer size
   char buffer[ buffer_size ]; //make a buffer
-char* pointer = buffer; //pointer to the first element of buffer
 
 // old version with no digits std::cout << "Type a sentence that does not contain any digits and press [RETURN], please." << std::endl;
 
  std::cout << "Type a sentence and press [RETURN], please." << std::endl;
   std::cin.getline( buffer, buffer_size ); //grab the input from the shell
 
- while(lengthstring(pointer)) //as long as length does not equal 0, i.e. the null string
+ while(lengthstring(buffer)) //as long as pointer length does not equal 0, i.e. the null string
    {
 
-  char* checklength = buffer; //a pointer to the first element of buffer that will be passed into the length method call
   unsigned int originallength = lengthstring(buffer); //length of the original cstring, originally checklength
   unsigned int RLElength = 0; //length of the new cstring, which will be checked later
 
@@ -126,7 +124,7 @@ std::cout << "Type a sentence that does not contain any digits and press [RETURN
     else{ //when using new style RLE compression, the RLElength could actually be longer. 
       std::cout << "The RLE version is " << (RLElength - originallength) << " longer than the original" << std::endl;
     }
- if(lengthstring(pointer)){
+ if(lengthstring(buffer)){
  delete []RLE; //deletes the memory allocated for the encoded array
  }
  //std::cout << "Type a sentence that does not contain any digits and press [RETURN], please." << std::endl; NOT USED IN RLE NEW STYLE ENCODING
