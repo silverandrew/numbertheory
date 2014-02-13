@@ -113,7 +113,7 @@ std::cout << "Type a sentence that does not contain any digits and press [RETURN
   } */
 
   //  else{ //if makestring(test) is true, i.e., there are no numbers in the cstring, removed in new style version
-    char* RLE = matchingstring(pointer); //grabs a pointer to the first element of the RLE encoded version of the array
+    char* RLE = matchingstring(buffer); //grabs a pointer to the first element of the RLE encoded version of the array, originally pointer
     RLElength = lengthstring(RLE); //checks the length of RLE version
     while(*RLE){ //while not at a delimeter
     std::cout << *RLE;
