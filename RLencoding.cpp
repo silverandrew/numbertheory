@@ -101,9 +101,8 @@ char* pointer = buffer; //pointer to the first element of buffer
  while(lengthstring(pointer)) //as long as length does not equal 0, i.e. the null string
    {
 
-  char* test = buffer; //a pointer to the first element of buffer that will be passed into the digit method call
   char* checklength = buffer; //a pointer to the first element of buffer that will be passed into the length method call
-  unsigned int originallength = lengthstring(checklength); //length of the original cstring
+  unsigned int originallength = lengthstring(buffer); //length of the original cstring, originally checklength
   unsigned int RLElength = 0; //length of the new cstring, which will be checked later
 
   /*  if(makestring(test) == false){ //calls the makestring method on the pointer, if the user enters a number, keep prompting. not used in new-style version
